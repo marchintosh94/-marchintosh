@@ -1,3 +1,69 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Monserrat";
+  src: url("/font/Montserrat-Light.ttf") format('truetype');
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Monserrat";
+  src: url("../public/font/Montserrat-Regular.ttf") format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Monserrat";
+  src: url("/font/Montserrat-ExtraLight.ttf") format('truetype');
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Monserrat";
+  src: url("/font/Montserrat-Medium.ttf") format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Monserrat";
+  src: url("/font/Montserrat-SemiBold.ttf") format('truetype');
+  font-weight: 600;
+}
+
+@layer base {
+  html {
+    font-family: "monserrat", system-ui, sans-serif
+  }
+  body {
+    @apply flex h-full flex-col bg-mb_light dark:bg-mb_dark text-mb_dark dark:text-mb_light fill-mb_dark dark:fill-mb_light
+  }
+  p {
+    @apply text-zinc-600 dark:text-zinc-400
+  }
+  p b {
+    @apply text-zinc-700 dark:text-zinc-300
+  }
+}
+
+@layer components {
+  #__next{
+    @apply h-full
+  }
+
+  /* LOGO */
+  .logo-title {
+    @apply uppercase text-3xl font-extralight 
+  }
+  .logo-title span {
+    @apply font-medium
+  }
+
+  /* NAVBAR */
+  .menu-item {
+    @apply p-4 rounded-sm cursor-pointer transition duration-200 ease-in-out hover:border-b hover:border-solid hover:border-mb_accent
+  }
+  .menu-item.active{
+    @apply font-semibold border-b border-solid border-mb_accent
+  }
+  .toolbar-social-logo {
+    @apply h-6 w-6 transition duration-200 rounded-md ease-in-out hover:scale-105 flex items-center justify-center dark:hover:bg-mb_light/[0.1] hover:bg-mb_dark/[0.1]
+  }
+}
