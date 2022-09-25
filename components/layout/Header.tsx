@@ -10,6 +10,8 @@ import {
   faLightbulbOn
 } from '@fortawesome/pro-light-svg-icons'
 import { useRouter } from "next/router"
+import imgProfile from "../../assets/photos/marcobaratto.png"
+import Img from "components/common/Img"
 
 const Header = () => {
   const { push } = useRouter()
@@ -103,7 +105,7 @@ const Header = () => {
             <div className="border-t border-gray-700 pt-4 pb-3 px-5">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
-                 <img src={'/images/photos/marcobaratto.png'} className=" h-11 w-11 rounded-full" alt="Marco Baratto"/>
+                 <Img src={imgProfile} className=" h-11 w-11 rounded-full" alt="Marco Baratto"/>
                 </div>
                 <div className="ml-4">
                   <div className="text-base font-medium dark:text-white">Marco Baratto</div>

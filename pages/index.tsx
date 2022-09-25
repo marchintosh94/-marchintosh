@@ -2,19 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Img from "components/common/Img"
 import Layout from "components/layout/Layout"
 import SocialLinks from "components/SocialLinks"
-import Paragraph from "components/typography/Paragraph"
-import Subtitle from "components/typography/Subtitle"
-import Title from "components/typography/Title"
+import Paragraph from "components/common/typography/Paragraph"
+import Subtitle from "components/common/typography/Subtitle"
+import Title from "components/common/typography/Title"
 import { Pages } from "lib/utils"
 import { NextPageWithLayout } from "models/types"
-import Head from "next/head"
-import Link from "next/link"
 import { ReactElement } from "react"
+import LinkButton from "components/common/LinkButton"
+import imageCartoon from "../assets/photos/marcobaratto.png"
 
 const Home: NextPageWithLayout = () => {
   return (
     <>
-      <div className="flex flex-col md:flex-row  items-center">
+      <div className="flex flex-col space-y-6 md:flex-row  items-center">
         <div className="space-y-6 md:basis-3/5">
           <div>
             <small className="lowercase text-lg">
@@ -32,15 +32,11 @@ const Home: NextPageWithLayout = () => {
             <b>Angular</b>&nbsp;and&nbsp;
             <b>Vue</b>&nbsp;development and I'm a mobile development enthusiast.
           </Paragraph>
-          <Link href={Pages.AboutMe}>
-            <div className="mt-4 mb-link w-fit">
-              See more About me&nbsp;<FontAwesomeIcon icon={['fal', 'arrow-right']}/>
-            </div>
-          </Link>
+          <LinkButton href={Pages.AboutMe}>See more About me</LinkButton>
         </div>
         <div className="flex justify-center h-full w-full md:block md:items-center md:basis-2/5 space-x-2">
           <SocialLinks className="sm:hidden flex-col justify-center space-y-2" iconClass="w-8 h-8"/>
-          <Img className="mb-image-page"  alt="marco baratto" src={'/images/photos/marcobaratto.png'}/>
+          <Img className="mb-image-page"  alt="marco baratto" src={imageCartoon}/>
         </div>
       </div>
     </>
