@@ -35,10 +35,10 @@
   body {
     @apply flex h-full flex-col bg-mb_light dark:bg-mb_dark text-mb_dark dark:text-mb_light fill-mb_dark dark:fill-mb_light
   }
-  p {
+  h2, h3, h4, p{
     @apply text-zinc-600 dark:text-zinc-400
   }
-  p b {
+  b {
     @apply text-zinc-700 dark:text-zinc-300
   }
 }
@@ -46,6 +46,10 @@
 @layer components {
   #__next{
     @apply h-full
+  }
+
+  .mb-divide{
+    @apply divide-y divide-mb_dark/10 dark:divide-mb_light/10
   }
 
   /* LOGO */
@@ -56,14 +60,36 @@
     @apply font-medium
   }
 
+  .mb-tr-duration {
+    @apply duration-[400ms]
+  }
+
   /* NAVBAR */
   .menu-item {
-    @apply p-4 rounded-sm cursor-pointer transition duration-200 ease-in-out hover:border-b hover:border-solid hover:border-mb_accent
+    @apply p-4 rounded-sm cursor-pointer transition mb-tr-duration ease-in-out hover:border-b hover:border-solid hover:border-mb_accent
   }
   .menu-item.active{
     @apply font-semibold border-b border-solid border-mb_accent
   }
   .toolbar-social-logo {
-    @apply h-6 w-6 transition duration-200 rounded-md ease-in-out hover:scale-105 flex items-center justify-center dark:hover:bg-mb_light/[0.1] hover:bg-mb_dark/[0.1]
+    @apply h-6 w-6 transition mb-tr-duration rounded-md ease-in-out  flex items-center justify-center dark:hover:bg-mb_light/[0.1] hover:bg-mb_dark/[0.1] hover:scale-110
+  }
+
+  /* BUTTONS */
+  .mb-button {
+    @apply rounded-xl border
+  }
+
+  /*LINKS*/
+  .mb-link {
+    @apply hover:px-4 py-2 cursor-pointer transition-all hover:text-mb_accent ease-in-out mb-tr-duration rounded-3xl hover:bg-mb_dark/5 dark:hover:bg-mb_light/5 p-1
+  }
+  .mb-text-link {
+    @apply cursor-pointer transition-all hover:text-mb_accent ease-in-out mb-tr-duration hover:bg-mb_dark/5 dark:hover:bg-mb_light/5 font-semibold
+  }
+
+  /*images*/
+  .mb-image-page {
+    @apply w-60 h-60 md:w-auto md:h-[428px] rounded-3xl bg-mb_light/[.02]
   }
 }

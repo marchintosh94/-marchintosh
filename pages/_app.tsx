@@ -1,16 +1,27 @@
 import '../styles/global.css'
 import { AppPropsWithLayout } from 'models/types'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faNpm, faGithub, faLinkedin, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { library} from '@fortawesome/fontawesome-svg-core'
+import { 
+  faArrowRight
+} from '@fortawesome/pro-light-svg-icons'
+import Head from 'next/head'
 
-library.add(faNpm, faGithub, faLinkedin, faTwitter, faInstagram)
+library.add(
+  faArrowRight, 
+)
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
-
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page)
 
-  return getLayout(<Component {...pageProps} />)
+  return getLayout(
+    <>
+      <Head>
+        <title>Marco Baratto</title>
+      </Head>
+      <Component {...pageProps} />
+    </>
+  )
 }
 
 export default App

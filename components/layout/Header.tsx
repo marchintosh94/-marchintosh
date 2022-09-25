@@ -3,49 +3,64 @@ import { Disclosure } from "@headlessui/react"
 import BarsIcon from "components/icons/BarsIcon"
 import XmarkIcon from "components/icons/XmarkIcon"
 import NavItem from "components/NavItem"
+import SocialLinks from "components/SocialLinks"
+import { Pages } from "lib/utils"
+import { 
+  faLightbulb, 
+  faLightbulbOn
+} from '@fortawesome/pro-light-svg-icons'
+import { useRouter } from "next/router"
 
 const Header = () => {
-  const socialMobileIconClass = 'h-6 w-6'
+  const { push } = useRouter()
+ 
+  function disableTransitionsTemporarily() {
+    document.documentElement.classList.add('[&_*]:!transition-none')
+    window.setTimeout(() => {
+      document.documentElement.classList.remove('[&_*]:!transition-none')
+    }, 0)
+  }
+
+  function toggleMode() {
+    disableTransitionsTemporarily()
+
+    let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    let isSystemDarkMode = darkModeMediaQuery.matches
+    let isDarkMode = document.documentElement.classList.toggle('dark')
+
+    if (isDarkMode === isSystemDarkMode) {
+      delete window.localStorage.isDarkMode
+    } else {
+      window.localStorage.isDarkMode = isDarkMode
+    }
+  }
   return (
     <Disclosure as="nav" >
       {({ open }) => (
         <>
-          <div className="mx-auto  px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 xl:px-0">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0">
-                  <div className="logo-title block h-8 w-auto lg:hidden">
-                      Marco <span>Baratto</span>
-                  </div>
-                  <div className="logo-title hidden h-8 w-auto lg:block">
-                      Marco <span>Baratto</span>
-                  </div>
+                <div className="flex-shrink-0 ">
+                    <div className="cursor-pointer" onClick={() => push(Pages.Home)}>
+                      <img src={'/images/logo/mb_light.svg'} alt="Marco Baratto Logo" className="w-auto block h-16 rounded-ful dark:hidden"/>
+                      <img src={'/images/logo/mb_dark.svg'} alt="Marco Baratto Logo" className="w-auto dark:inline-block h-16 rounded-ful hidden"/>
+                    </div>
                 </div>
+              </div>
+
+              <div onClick={toggleMode} className="flex items-center cursor-pointer rotate-180">
+                <FontAwesomeIcon className="h-10 w-10 hidden dark:block " icon={faLightbulb}/>
+                <FontAwesomeIcon className="h-10 w-10 dark:hidden block text-mb_accent" icon={faLightbulbOn}/>
               </div>
 
               <div className="hidden sm:ml-6 sm:flex space-x-10">
                 <div className="flex items-center space-x-2">
-                  <NavItem href="/">Home</NavItem>
-                  <NavItem href="/projects">Projects</NavItem>
-                  <NavItem href="/about-me">About</NavItem>
+                  <NavItem href={Pages.Home}>Home</NavItem>
+                  {/* <NavItem href={Pages.Projects}>Projects</NavItem> */}
+                  <NavItem href={Pages.AboutMe}>About</NavItem>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/~marchintosh94" aria-label="npm marchintosh94" className={"toolbar-social-logo hover:text-[#c12127]"}>
-                    <FontAwesomeIcon icon={['fab', 'npm']} />
-                  </a>
-                  <a rel="noopener noreferrer" target="_blank" href="https://github.com/marchintosh94/" aria-label="github marchintosh94" className={"toolbar-social-logo"}>
-                    <FontAwesomeIcon icon={['fab', 'github']} />
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/marchintosh94/" aria-label="linkedin marchintosh94" className={"toolbar-social-logo hover:text-[#0a66c2]"}>
-                    <FontAwesomeIcon icon={['fab', 'linkedin']} />
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/marchintosh94" aria-label="twitter marchintosh94" className={"toolbar-social-logo hover:text-[#1a8cd8]"}>
-                    <FontAwesomeIcon icon={['fab', 'twitter']} />
-                  </a>
-                  <a target="_blank" rel="noopener noreferrer" href="https://instagram.com/marco.baratto" aria-label="instagram marco.baratto" className={"toolbar-social-logo hover:text-[#d6249f]"}>
-                    <FontAwesomeIcon icon={['fab', 'instagram']} />
-                  </a>
-                </div>
+               <SocialLinks/>
               </div>
               <div className="-mr-2 flex sm:hidden">
                 {/* Mobile menu button */}
@@ -67,19 +82,19 @@ const Header = () => {
               
               <Disclosure.Button
                 as="a"
-                className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <NavItem href="/">Home</NavItem>
               </Disclosure.Button>
-              <Disclosure.Button
+              {/* <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <NavItem href="/projects">Projects</NavItem>
-              </Disclosure.Button>
+              </Disclosure.Button> */}
               <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <NavItem href="/about-me">About</NavItem>
               </Disclosure.Button>
@@ -88,30 +103,14 @@ const Header = () => {
             <div className="border-t border-gray-700 pt-4 pb-3 px-5">
               <div className="flex items-center px-5">
                 <div className="flex-shrink-0">
-                 <img src={'/images/me.jpg'} className=" h-11 w-11 rounded-full" alt="Marco Baratto"/>
+                 <img src={'/images/photos/marcobaratto.png'} className=" h-11 w-11 rounded-full" alt="Marco Baratto"/>
                 </div>
                 <div className="ml-4">
-                  <div className="text-base font-medium text-white">Marco Baratto</div>
-                  <div className="text-sm font-medium text-gray-400">aka @marchintosh94</div>
+                  <div className="text-base font-medium dark:text-white">Marco Baratto</div>
+                  <div className="text-sm font-medium dark:text-gray-400">aka @marchintosh94</div>
                 </div>
               </div>
-              <div className="mt-5 px-6 flex items-center justify-between ">
-                <a target="_blank" rel="noopener noreferrer" href="https://www.npmjs.com/~marchintosh94" aria-label="npm marchintosh94" className={"toolbar-social-logo hover:text-[#c12127]"}>
-                  <FontAwesomeIcon icon={['fab', 'npm']} className={socialMobileIconClass}/>
-                </a>
-                <a rel="noopener noreferrer" target="_blank" href="https://github.com/marchintosh94/" aria-label="github marchintosh94" className={"toolbar-social-logo"}>
-                  <FontAwesomeIcon icon={['fab', 'github']} className={socialMobileIconClass} />
-                </a>
-                <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/marchintosh94/" aria-label="linkedin marchintosh94" className={"toolbar-social-logo hover:text-[#0a66c2]"}>
-                  <FontAwesomeIcon icon={['fab', 'linkedin']} className={socialMobileIconClass} />
-                </a>
-                <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/marchintosh94" aria-label="twitter marchintosh94" className={"toolbar-social-logo hover:text-[#1a8cd8]"}>
-                  <FontAwesomeIcon icon={['fab', 'twitter']} className={socialMobileIconClass} />
-                </a>
-                <a target="_blank" rel="noopener noreferrer" href="https://instagram.com/marco.baratto" aria-label="instagram marco.baratto" className={"toolbar-social-logo hover:text-[#d6249f]"}>
-                  <FontAwesomeIcon icon={['fab', 'instagram']} className={socialMobileIconClass} />
-                </a>
-              </div>
+              <SocialLinks className="mt-5 px-6 justify-between" iconClass="w-7 h-7"/>
             </div>
           </Disclosure.Panel>
         </>

@@ -1,4 +1,5 @@
 import Img from "./common/Img"
+import image0 from "../public/photos/me.jpg"
 import image1 from "../public/photos/workstation.jpg"
 import image2 from "../public/photos/dogs.jpg"
 import clsx from "clsx"
@@ -9,7 +10,7 @@ const Photos = () => {
   return (
     <div className="mt-16 sm:mt-20">
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, //image3, image4, image5
+        {[image0, image1, image2, //image3, image4, image5
           ].map((image, imageIndex) => (
           <div
             key={image.src}
