@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Img from "components/common/Img"
 import Layout from "components/layout/Layout"
 import SocialLinks from "components/SocialLinks"
@@ -6,12 +5,32 @@ import Paragraph from "components/common/typography/Paragraph"
 import Subtitle from "components/common/typography/Subtitle"
 import Title from "components/common/typography/Title"
 import { Pages } from "lib/utils"
-import { NextPageWithLayout } from "models/types"
-import { ReactElement } from "react"
+import { ExperienceUI, NextPageWithLayout } from "models/types"
+import { ReactElement, useState } from "react"
 import LinkButton from "components/common/LinkButton"
 import imageCartoon from "../assets/photos/marcobaratto.png"
+import ResumeBox from "components/ResumeBox"
+import Airtable from "airtable"
 
-const Home: NextPageWithLayout = () => {
+export const getStaticProps = async () => {
+  const airtable = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(process.env.AIRTABLE_WORKSPACE!)
+  const experiences = await  airtable('Experiences').select().all()
+  return {
+    props: {
+      experiences: experiences.map(e => ({
+        id: e.id, 
+        ...e.fields,
+        startYear: `${new Date(e.fields.start as string).getMonth()}/${new Date(e.fields.start as string).getFullYear()}`,
+        endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present'
+      })),
+    },
+    revalidate: 60 * 60 * 24, // In seconds
+  }
+}
+
+const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) => {
+  const [activeWork, setActiveWork] = useState(experiences[0].id)
+
   return (
     <>
       <div className="flex flex-col space-y-6 md:flex-row  items-center">
@@ -39,6 +58,10 @@ const Home: NextPageWithLayout = () => {
           <Img className="mb-image-page"  alt="marco baratto" src={imageCartoon}/>
         </div>
       </div>
+      
+      <section className="grid grid-cols-4 xl:grid-cols-3 p-2 my-40 dark:bg-black rounded-2xl">
+        <ResumeBox onChangeActive={(id) => setActiveWork(id)} active={activeWork} className="col-span-4 md:col-span-2 xl:col-span-1 border-none" experiences={experiences}/>
+      </section>
     </>
   )
 }
