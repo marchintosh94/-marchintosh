@@ -4,24 +4,27 @@ import SocialLinks from "components/SocialLinks"
 import Paragraph from "components/common/typography/Paragraph"
 import Subtitle from "components/common/typography/Subtitle"
 import Title from "components/common/typography/Title"
-import { Pages } from "lib/utils"
-import { ExperienceUI, NextPageWithLayout } from "models/types"
+import { mapSkills, Pages } from "lib/utils"
+import { ExperienceUI, NextPageWithLayout, Skill } from "models/types"
 import { ReactElement, useState } from "react"
 import LinkButton from "components/common/LinkButton"
 import imageCartoon from "../assets/photos/marcobaratto.png"
 import ResumeBox from "components/ResumeBox"
 import Airtable from "airtable"
+import ExperienceBox from "components/ExperienceBox"
 
 export const getStaticProps = async () => {
   const airtable = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(process.env.AIRTABLE_WORKSPACE!)
-  const experiences = await  airtable('Experiences').select().all()
+  const experiences = await  airtable('Experiences').select({sort: [{field: 'order'}]}).all()
+  const skills = await  airtable('Skills').select({sort: [{field: 'groupOrder', direction: 'asc'}, {field: 'fieldOrder', direction: 'asc'}]}).all()
   return {
     props: {
       experiences: experiences.map(e => ({
         id: e.id, 
         ...e.fields,
         startYear: `${new Date(e.fields.start as string).getMonth()}/${new Date(e.fields.start as string).getFullYear()}`,
-        endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present'
+        endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present',
+        skills: skills.filter(s => (e.fields.skills as string[]).includes(s.id)).map(mapSkills)
       })),
     },
     revalidate: 60 * 60 * 24, // In seconds
@@ -29,7 +32,7 @@ export const getStaticProps = async () => {
 }
 
 const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) => {
-  const [activeWork, setActiveWork] = useState(experiences[0].id)
+  const [activeWork, setActiveWork] = useState(experiences[0])
 
   return (
     <>
@@ -60,7 +63,8 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
       </div>
       
       <section className="grid grid-cols-4 xl:grid-cols-3 p-2 my-40 dark:bg-black rounded-2xl">
-        <ResumeBox onChangeActive={(id) => setActiveWork(id)} active={activeWork} className="col-span-4 md:col-span-2 xl:col-span-1 border-none" experiences={experiences}/>
+        <ResumeBox onChangeActive={(experience) => setActiveWork(experience)} active={activeWork.id} className="col-span-4 md:col-span-2 xl:col-span-1 border-none" experiences={experiences}/>
+        <ExperienceBox className="col-span-4 md:col-span-2 xl:col-span-2 border-none" experience={activeWork}/>
       </section>
     </>
   )

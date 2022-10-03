@@ -59,7 +59,7 @@ const Header = () => {
               <div className="hidden sm:ml-6 sm:flex space-x-10">
                 <div className="flex items-center space-x-2">
                   <NavItem href={Pages.Home}>Home</NavItem>
-                  {/* <NavItem href={Pages.Projects}>Projects</NavItem> */}
+                  <NavItem href={Pages.Projects}>Projects</NavItem>
                   <NavItem href={Pages.AboutMe}>About</NavItem>
                 </div>
                <SocialLinks/>
@@ -80,20 +80,18 @@ const Header = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-              
               <Disclosure.Button
                 as="a"
                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <NavItem href="/">Home</NavItem>
               </Disclosure.Button>
-              {/* <Disclosure.Button
+              <Disclosure.Button
                 as="a"
                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 <NavItem href="/projects">Projects</NavItem>
-              </Disclosure.Button> */}
+              </Disclosure.Button>
               <Disclosure.Button
                 as="a"
                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"

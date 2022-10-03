@@ -13,6 +13,7 @@ export type AppPropsWithLayout = AppProps & {
 export interface Experience {
   id: string;
   company: string;
+  companyUrl: string;
   title: string;
   description: string;
   logo: Attacments[]
@@ -23,6 +24,19 @@ export interface Experience {
 export interface ExperienceUI extends Experience{
   startYear: string;
   endYear: string;
+  skills: SkillUI[];
+}
+
+export interface Skill {
+  title: string;
+  logo: Attacments[];
+  url: string;
+  type: 'database' | 'framework-library' | 'tools'
+  Experiences: string[];
+  Projects: string[];
+}
+export interface SkillUI extends Omit<Skill, 'Experiences' | 'Projects'> {
+  id: string;
 }
 
 export interface Attacments {

@@ -6,23 +6,23 @@ import Button from "./common/Button"
 import Img from "./common/Img"
 import Title2 from "./common/typography/Title2"
 
-interface ResumeBoxProps extends React.HtmlHTMLAttributes<HTMLDivElement> {
+interface ResumeBoxProps extends React.HtmlHTMLAttributes<HTMLElement> {
   active: string;
   experiences: ExperienceUI[]
-  onChangeActive: (id: string) => void
+  onChangeActive: (experience: ExperienceUI) => void
 }
 
 const ResumeBox: React.FC<ResumeBoxProps> = ({experiences, active, onChangeActive, className, ...props}) => {
 
   return (
-    <div className={`rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40 ${className || ''}`} {...props}>
+    <article className={`rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40 ${className || ''}`} {...props}>
       <Title2 className="flex items-center px-4">
         <FontAwesomeIcon className="h-8 w-8 flex-none" icon={faBriefcase}/>
         <span className="ml-3">Work</span>
       </Title2>
       <ol className="mt-6 space-y-2">
         {experiences.map((role, roleIndex) => (
-          <li onClick={() => onChangeActive(role.id)} key={roleIndex} className={clsx({
+          <li onClick={() => onChangeActive(role)} key={roleIndex} className={clsx({
             "flex p-3 gap-4 cursor-pointer hover:bg-[#38383a] rounded-2xl": true,
             "bg-[#38383a]": active === role.id
           })}>
@@ -39,12 +39,12 @@ const ResumeBox: React.FC<ResumeBoxProps> = ({experiences, active, onChangeActiv
                 {role.company}
               </dd>
               <dt className="sr-only">Role</dt>
-              <dd className="text-xs text-zinc-500 dark:text-zinc-400">
+              <dd className="w-full text-xs text-zinc-500 dark:text-zinc-400">
                 {role.title}
               </dd>
               <dt className="sr-only">Date</dt>
               <dd
-                className="lg:ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+                className=" text-xs text-zinc-400 dark:text-zinc-500"
                 aria-label={`${role.startYear} until ${role.endYear}`}
               >
                 <time dateTime={role.startYear}>
@@ -59,7 +59,7 @@ const ResumeBox: React.FC<ResumeBoxProps> = ({experiences, active, onChangeActiv
           </li>
         ))}
       </ol>
-    </div>
+    </article>
   )
 }
 
