@@ -24,7 +24,7 @@ const AboutMeFirst: React.FC = () => {
           &nbsp;<a target={'_blank'} className="mb-text-link" href="https://www.fabiobiondi.dev/">Fabio Biondi</a>'s platform and Udemy, about 
           &nbsp;<b>Angular</b>, <b>React</b>, <b>State Management</b>, <b>Vue</b>, <b>JavaScript</b> and <b>Typescript</b>.
         </Paragraph>
-        <LinkButton href={Pages.Projects}>Let's go to my projects</LinkButton>
+        <LinkButton href={Pages.Projects.path}>Let's go to my projects</LinkButton>
       </div>
     </section>
   )
