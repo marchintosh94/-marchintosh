@@ -16,7 +16,6 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <title>Marco Baratto</title>
         <meta charSet="utf-8"></meta>
         <meta name="description" content={metaDesc}/>
-        <meta name="robots" content="noindex,nofollow"/>
 
         <meta property="og:title" content="Marco Baratto" />
         <meta property="og:type" content="website" />
