@@ -2,6 +2,9 @@ import '../styles/global.css'
 import { AppPropsWithLayout } from 'models/types'
 import Head from 'next/head'
 import metaSocialImg from '../assets/meta/marcobaratto.png'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+config.autoAddCss = false
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   // Use the layout defined at the page level, if available

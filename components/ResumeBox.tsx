@@ -17,7 +17,7 @@ const ResumeBox: React.FC<ResumeBoxProps> = ({experiences, active, onChangeActiv
   return (
     <article className={`rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40 ${className || ''}`} {...props}>
       <Title2 className="flex items-center px-4">
-        <FontAwesomeIcon className="h-8 w-8 flex-none" icon={faBriefcase}/>
+        <FontAwesomeIcon className="!h-8 w-8 flex-none" icon={faBriefcase}/>
         <span className="ml-3">Work</span>
       </Title2>
       <ol className="mt-6 space-y-2">

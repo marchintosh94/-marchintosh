@@ -1,9 +1,5 @@
 import AboutMeThings from "components/AboutMeList";
-import Img from "components/common/Img";
 import Layout from "components/layout/Layout";
-import SocialLinks from "components/SocialLinks";
-import Paragraph from "components/common/typography/Paragraph";
-import Title from "components/common/typography/Title";
 import { NextPageWithLayout } from "models/types";
 import { ReactElement } from "react";
 import AboutMeFirst from "components/AboutMeFirst";

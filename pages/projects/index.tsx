@@ -32,7 +32,7 @@ export const getStaticProps = async () => {
 
 const Projects: NextPageWithLayout<{projects: ProjectUI[]}> = ({projects}) => {
 const linksClass = 'toolbar-social-logo h-10 w-10 p-2'
-const linksIconClass = 'h-9 w-9'
+const linksIconClass = '!h-9 w-9'
 
   return (
     <section>

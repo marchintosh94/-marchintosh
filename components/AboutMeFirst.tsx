@@ -10,7 +10,7 @@ const AboutMeFirst: React.FC = () => {
   const yearOfExperience = new Date().getFullYear() - 2017
   return (
     <section className="flex flex-col md:flex-row items-center md:space-x-8 space-y-4">
-      <SocialLinks className="sm:hidden space-x-4 mb-4" iconClass="w-8 h-8"/>
+      <SocialLinks className="sm:hidden space-x-4 mb-4" iconClass="w-8 !h-8"/>
       <div className="flex flex-col items-center h-full w-full md:block md:items-center md:basis-2/5 space-y-4">
         <Img className="w-80 h-80 mb-image-page md:h-[400px] md:w-auto aspect-square rotate-3 rounded-2xl object-cover saturate-200" alt="marco baratto"  src={aboutImage}/>     
       </div>

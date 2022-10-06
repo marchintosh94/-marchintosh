@@ -57,7 +57,7 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
           <LinkButton href={Pages.AboutMe.path}>See more About me</LinkButton>
         </div>
         <div className="flex justify-center h-full w-full md:block md:items-center md:basis-2/5 space-x-2">
-          <SocialLinks className="sm:hidden flex-col justify-center space-y-2" iconClass="w-8 h-8"/>
+          <SocialLinks className="sm:hidden flex-col justify-center space-y-2" iconClass="w-8 !h-8"/>
           <Img className="mb-image-page"  alt="marco baratto" src={imageCartoon}/>
         </div>
       </section>

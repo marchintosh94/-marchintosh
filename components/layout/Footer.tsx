@@ -17,7 +17,7 @@ const Footer: React.FC<{pages: Pages[]}> = ({pages}) => {
           ))}
         </nav>
         <div className="mt-8 flex justify-center">
-          <SocialLinks className="space-x-6" iconClass="h-6 w-6"/>
+          <SocialLinks className="space-x-6" iconClass="!h-6 w-6"/>
         </div>
         <p className="mt-8 text-center text-base text-gray-400">&copy; {new Date().getFullYear()} Marco Baratto. All rights reserved.</p>
       </div>

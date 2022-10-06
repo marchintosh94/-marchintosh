@@ -9,7 +9,7 @@ import Paragraph from "./common/typography/Paragraph"
 import Subtitle from "./common/typography/Subtitle"
 
 const AboutMeThings: React.FC<React.HtmlHTMLAttributes<HTMLDivElement>> = (props) => {
-  const iconClass = "h-52 w-52 rounded-full opacity-25"
+  const iconClass = "!h-52 w-52 rounded-full opacity-25"
   return (
     <ul role={'list'} className={`space-y-10 ${props.className}`}>
       <li className="py-4">
@@ -20,11 +20,11 @@ const AboutMeThings: React.FC<React.HtmlHTMLAttributes<HTMLDivElement>> = (props
             
             <Paragraph className="text-sm">
               <sup>
-                <FontAwesomeIcon className="h-2 w-2" icon={faQuoteLeft} />
+                <FontAwesomeIcon className="!h-2 w-2" icon={faQuoteLeft} />
               </sup>
               &nbsp;Never Give Up&nbsp;
               <sup>
-                <FontAwesomeIcon className="h-2 w-2" icon={faQuoteRight} />
+                <FontAwesomeIcon className="!h-2 w-2" icon={faQuoteRight} />
               </sup>
             </Paragraph>
             <Paragraph className="text-sm">

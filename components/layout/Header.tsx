@@ -52,8 +52,8 @@ const Header: React.FC<{pages: Pages[]}> = ({pages}) => {
               </div>
 
               <div onClick={toggleMode} className="flex items-center cursor-pointer rotate-180">
-                <FontAwesomeIcon className="h-10 w-10 hidden dark:block " icon={faLightbulb}/>
-                <FontAwesomeIcon className="h-10 w-10 dark:hidden block text-mb_accent" icon={faLightbulbOn}/>
+                <FontAwesomeIcon className="!h-10 w-10 !hidden dark:!block" icon={faLightbulb}/>
+                <FontAwesomeIcon className="!h-10 w-10 dark:!hidden !block text-mb_accent" icon={faLightbulbOn}/>
               </div>
 
               <div className="hidden sm:ml-6 sm:flex space-x-10">
@@ -105,7 +105,7 @@ const Header: React.FC<{pages: Pages[]}> = ({pages}) => {
                   <div className="text-sm font-medium dark:text-gray-400">aka @marchintosh94</div>
                 </div>
               </div>
-              <SocialLinks className="mt-5 px-6 justify-between" iconClass="w-7 h-7"/>
+              <SocialLinks className="mt-5 px-6 justify-between" iconClass="w-7 !h-7"/>
             </div>
           </Disclosure.Panel>
         </>
