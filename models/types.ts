@@ -1,3 +1,4 @@
+import { Attachment } from "airtable"
 import { NextPage } from "next"
 import { AppProps } from "next/app"
 import { ReactElement, ReactNode } from "react"
@@ -47,4 +48,25 @@ export interface Attacments {
   type: string;
   width: number;
   height:number;
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  gitHub?: string;
+  doc?: string;
+  npm?: string;
+  preview: Attachment[];
+  collaboration?: string;
+  website?: string;
+}
+
+export interface ProjectUI extends Project {
+  skills: SkillUI[];
+}
+
+export interface Pages {
+  path: string;
+  title: string;
 }

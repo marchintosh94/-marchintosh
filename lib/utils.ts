@@ -1,10 +1,10 @@
 import { FieldSet, Record } from "airtable";
-import { Skill, SkillUI } from "models/types";
+import { SkillUI } from "models/types";
 
-export enum Pages {
-  Home = '/',
-  AboutMe = '/about-me',
-  Projects = '/projects'
+export const Pages = {
+  Home: {path: '/', title: 'Home'},
+  AboutMe: {path: '/about-me', title: 'About'},
+  Projects: {path: '/projects', title: 'Projects'}
 }
 
 export const mapSkills = ({id, fields: {Experiences, Projects, fieldOrder, groupOrder, ...skill}}: Record<FieldSet>): SkillUI => ({ id, ...skill } as SkillUI)

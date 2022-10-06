@@ -27,7 +27,7 @@ export const getStaticProps = async () => {
         skills: skills.filter(s => (e.fields.skills as string[]).includes(s.id)).map(mapSkills)
       })),
     },
-    revalidate: 60 * 60 * 24, // In seconds
+    revalidate: 60 * 60 * 24 * 7, // In seconds
   }
 }
 
@@ -36,7 +36,7 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
 
   return (
     <>
-      <div className="flex flex-col space-y-6 md:flex-row  items-center">
+      <section className="flex flex-col space-y-6 md:flex-row  items-center">
         <div className="space-y-6 md:basis-3/5">
           <div>
             <small className="lowercase text-lg">
@@ -60,9 +60,9 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
           <SocialLinks className="sm:hidden flex-col justify-center space-y-2" iconClass="w-8 h-8"/>
           <Img className="mb-image-page"  alt="marco baratto" src={imageCartoon}/>
         </div>
-      </div>
+      </section>
       
-      <section className="grid grid-cols-4 xl:grid-cols-3 p-2 my-40 dark:bg-black rounded-2xl">
+      <section className="grid grid-cols-4 xl:grid-cols-3 p-2  dark:bg-black rounded-2xl">
         <ResumeBox onChangeActive={(experience) => setActiveWork(experience)} active={activeWork.id} className="col-span-4 md:col-span-2 xl:col-span-1 border-none" experiences={experiences}/>
         <ExperienceBox className="col-span-4 md:col-span-2 xl:col-span-2 border-none" experience={activeWork}/>
       </section>
@@ -72,7 +72,7 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
 
 Home.getLayout = (page: ReactElement) => {
   return (
-    <Layout>
+    <Layout className="space-y-60">
       {page}
     </Layout>
   )

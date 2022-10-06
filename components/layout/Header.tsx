@@ -4,7 +4,6 @@ import BarsIcon from "components/icons/BarsIcon"
 import XmarkIcon from "components/icons/XmarkIcon"
 import NavItem from "components/NavItem"
 import SocialLinks from "components/SocialLinks"
-import { Pages } from "lib/utils"
 import { 
   faLightbulb, 
   faLightbulbOn
@@ -12,8 +11,9 @@ import {
 import { useRouter } from "next/router"
 import imgProfile from "../../assets/photos/marcobaratto.png"
 import Img from "components/common/Img"
+import { Pages } from "models/types"
 
-const Header = () => {
+const Header: React.FC<{pages: Pages[]}> = ({pages}) => {
   const { push } = useRouter()
  
   function disableTransitionsTemporarily() {
@@ -44,7 +44,7 @@ const Header = () => {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0 ">
-                    <div className="cursor-pointer" onClick={() => push(Pages.Home)}>
+                    <div className="cursor-pointer" onClick={() => push('/')}>
                       <img src={'/images/logo/mb_light.svg'} alt="Marco Baratto Logo" className="w-auto block h-16 rounded-ful dark:hidden"/>
                       <img src={'/images/logo/mb_dark.svg'} alt="Marco Baratto Logo" className="w-auto dark:inline-block h-16 rounded-ful hidden"/>
                     </div>
@@ -58,9 +58,11 @@ const Header = () => {
 
               <div className="hidden sm:ml-6 sm:flex space-x-10">
                 <div className="flex items-center space-x-2">
-                  <NavItem href={Pages.Home}>Home</NavItem>
-                  <NavItem href={Pages.Projects}>Projects</NavItem>
-                  <NavItem href={Pages.AboutMe}>About</NavItem>
+                  {
+                    pages.map(p => (
+                      <NavItem key={p.title} href={p.path}>{p.title}</NavItem>
+                    ))
+                  }
                 </div>
                <SocialLinks/>
               </div>
@@ -80,24 +82,17 @@ const Header = () => {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pt-2 pb-3">
-              <Disclosure.Button
-                as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                <NavItem href="/">Home</NavItem>
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                <NavItem href="/projects">Projects</NavItem>
-              </Disclosure.Button>
-              <Disclosure.Button
-                as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                <NavItem href="/about-me">About</NavItem>
-              </Disclosure.Button>
+              {
+                pages.map(p => (
+                  <Disclosure.Button
+                    key={p.title}
+                    as="a"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                  >
+                    <NavItem href={p.path}>{p.title}</NavItem>
+                  </Disclosure.Button>
+                ))
+              }
 
             </div>
             <div className="border-t border-gray-700 pt-4 pb-3 px-5">

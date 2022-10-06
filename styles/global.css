@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(#424242) var(#7b7b7b);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #7b7b7b;
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 12px;
+  border: 1px solid #7b7b7b;
+}
+
 @font-face {
   font-family: "Monserrat";
   src: url("/font/Montserrat-Light.ttf") format('truetype');
@@ -31,6 +53,9 @@
 @layer base {
   html {
     font-family: "monserrat", system-ui, sans-serif
+  }
+  html {
+    @apply@apply scroll-smooth
   }
   body {
     @apply flex h-full flex-col bg-mb_light dark:bg-mb_dark text-mb_dark dark:text-mb_light fill-mb_dark dark:fill-mb_light
@@ -94,68 +119,30 @@
   }
 
   /*projects*/
-  .mb-project__img{
-    /* .single-img {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 60%;
-      @media (min-width: 1025px) and (max-width: 1300px){
-      }
-      @media (min-width: 760px) and (max-width: 1024px) {
-          width: 100%;
-      }
-      @media (min-width: 480px) and (max-width: 759px) {
-          width: 100%;
-      }
-      @media (max-width: 479px) {
-          width: 100%;
-      }
-      img {
-          width: 700px;
-          height: 398px;
-          border-radius: 15px;
-          box-shadow: rgba(155,156,159, 0.42) 0px 60px 123px -25px,
-          rgba(155,156,159, 0.08) 0px 35px 75px -35px;
-          transform:
-            perspective(800px)
-            rotateY(25deg) scale(0.8)
-            rotateX(10deg);
-            filter: blur(0px);
-            opacity: 1;
-            transition: 0.6s ease all;
-            &:hover {
-              box-shadow: 0px 19px 67px -38px rgba(155,156,159,0.8);
-              transform:
-                perspective(800px)
-                rotateY(-15deg)
-                translateY(-50px)
-                rotateX(10deg)
-                scale(1);
-              filter: blur(.2px);
-              opacity: 1;
-              @media (min-width: 1025px) and (max-width: 1300px){
-              }
-              @media (min-width: 760px) and (max-width: 1024px) {
-              }
-              @media (min-width: 480px) and (max-width: 759px) {
-              }
-              @media (max-width: 479px) {
-              }
-            }
-          @media (min-width: 1025px) and (max-width: 1300px){
-          }
-          @media (min-width: 760px) and (max-width: 1024px) {
-          }
-          @media (min-width: 480px) and (max-width: 759px) {
-              width: 500px;
-              height: 284px;
-          }
-          @media (max-width: 479px) {
-              width: 350px;
-              height: 199px;
-          }
-      }
-  } */
+  .mb-project__box-image {
+    @apply flex items-center 
+  }
+  .mb-project__img {
+    @apply rounded-2xl
+    w-full h-[90%] aspect-[5/3]
+    shadow-mb_dark/60
+    dark:shadow-mb_light/40
+    shadow-md
+    transition-all 
+    duration-[.6s] 
+    ease-in-out 
+    scale-75  
+    hover:scale-100
+    hover:translate-y-2
+    brightness-75
+    hover:brightness-110
+    hover:shadow-2xl
+    cursor-pointer
+  }
+  .mb-project__img-odd{
+    @apply skew-y-[5deg] skew-x-[5deg] hover:skew-x-2 hover:skew-y-2
+  }
+  .mb-project__img-even {
+    @apply  -skew-y-[5deg] -skew-x-[5deg] hover:-skew-x-2 hover:-skew-y-2
   }
 }
