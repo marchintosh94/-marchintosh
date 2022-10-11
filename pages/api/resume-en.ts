@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { generatePdf } from "html-pdf-node-ts"
+import { generatePdf } from "html-pdf-node"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
