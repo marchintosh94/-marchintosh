@@ -24,7 +24,7 @@ const ExperienceBox: React.FC<ExperienceBoxProps> = ({experience, className,...p
       <Paragraph>
         {experience.description}
       </Paragraph>
-      <ExtLinkButton target={'_blank'} href={experience.companyUrl}>
+      <ExtLinkButton target={'_blank'} className={"mt-4"} href={experience.companyUrl}>
         <Img alt={experience.company} className="rounded-full h-5 w-5 mr-2" src={experience.logo[0].url}/>{experience.company}
       </ExtLinkButton>
     </article>

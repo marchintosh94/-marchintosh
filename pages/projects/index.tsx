@@ -31,8 +31,10 @@ export const getStaticProps = async () => {
 }
 
 const Projects: NextPageWithLayout<{projects: ProjectUI[]}> = ({projects}) => {
-const linksClass = 'toolbar-social-logo h-10 w-10 p-2'
-const linksIconClass = '!h-9 w-9'
+  const linksClass = 'toolbar-social-logo h-10 w-10 p-2'
+  const linksIconClass = '!h-9 w-9'
+
+  const navigateTo = (url: string) => window.open(url, '_blank')
 
   return (
     <section>
@@ -46,7 +48,7 @@ const linksIconClass = '!h-9 w-9'
                 'sm:order-2 sm:justify-end': i % 2 == 0,
                 'sm:justify-start': i % 2 == 1
                 })}>
-                <Img src={project.preview[0].url} className={clsx({
+                <Img onClick={() => navigateTo(project.website)} src={project.preview[0].url} className={clsx({
                   "mb-project__img ": true,
                   'sm:order-2 mb-project__img-odd': i % 2 == 1,
                   'mb-project__img-even': i % 2 == 0

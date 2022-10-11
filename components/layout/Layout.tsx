@@ -13,6 +13,7 @@ const Layout: React.FC<LayoutProps> = ({children, className}) => {
     Pages.Home,
     Pages.Projects,
     Pages.AboutMe,
+    Pages.Resume
   ]
   return (
     <>

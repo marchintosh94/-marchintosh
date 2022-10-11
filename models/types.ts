@@ -59,7 +59,7 @@ export interface Project {
   npm?: string;
   preview: Attachment[];
   collaboration?: string;
-  website?: string;
+  website: string;
 }
 
 export interface ProjectUI extends Project {
@@ -69,4 +69,24 @@ export interface ProjectUI extends Project {
 export interface Pages {
   path: string;
   title: string;
+}
+
+export interface Profile {
+  title: string;
+  role: string;
+  intro: string;
+  lang: string;
+}
+export interface ProfileUI extends Profile {
+  id: string;
+}
+export interface Contacts {
+  name: string;
+  url?: string;
+  urlLabel?: string;
+  value?: string;
+  type: 'social' | 'info' | 'contact';
+}
+export interface ContactsUI extends Contacts {
+  id: string;
 }
