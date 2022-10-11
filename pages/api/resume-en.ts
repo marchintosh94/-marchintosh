@@ -1,5 +1,5 @@
+import { generatePdf } from "lib/html-to-pdf";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { generatePdf } from "html-pdf-node-ts"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
