@@ -1,12 +1,6 @@
-import { LowerCasePaperFormat, PDFOptions } from 'puppeteer';
+import puppeteer, { LowerCasePaperFormat, PDFOptions } from 'puppeteer';
 import { Promise as PromiseBluebird } from 'bluebird';
 import hb from 'handlebars';
-
-let chromium = {} as any;
-let puppeteer: any
-
-chromium = require("chrome-aws-lambda");
-puppeteer = require("puppeteer-core");
 
 type CallBackType = (pdf: any) => void;
 
@@ -29,9 +23,7 @@ type FileType = FileWithUrl | FileWithContent;
 export async function generatePdf(file: FileType, opt?: OptionsProps, callback?: CallBackType) {
   const {args = [], ...options} = opt || {}
   let launchOptions = {
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
+    args: ["--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
     headless: true,
     ignoreHTTPSErrors: true,
   }
