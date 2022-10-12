@@ -1,29 +1,20 @@
-import { chromium, Page} from "playwright"
+import { LowerCasePaperFormat, PDFOptions } from 'puppeteer';
 import { Promise as PromiseBluebird } from 'bluebird';
 import hb from 'handlebars';
 
-type CallBackType = (pdf: any) => void;
-interface PdfPlaywrightOptions {
-  displayHeaderFooter?: boolean;
-  footerTemplate?: string;
-  format?: `Letter` | `Legal` | `Tabloid` | `Ledger` | `A0` | `A1` | `A2` | `A3` | `A4` | `A5` | `A6`;
-  headerTemplate?: 'date' | 'title' | 'url' | 'pageNumber' | 'totalPages';
-  height?: string|number;
-  landscape?: boolean;
-  margin?: {
-    top?: string|number;
-    right?: string|number;
-    bottom?: string|number;
-    left?: string|number;
-  };
-  pageRanges?: string;
-  path?: string;
-  preferCSSPageSize?: boolean;
-  printBackground?: boolean;
-  scale?: number;
-  width?: string|number;
+let chromium = {} as any;
+let puppeteer: any
+
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  chromium = require("chrome-aws-lambda");
+  puppeteer = require("puppeteer-core");
+} else {
+  puppeteer = require("puppeteer");
 }
-interface OptionsProps extends PdfPlaywrightOptions{
+
+type CallBackType = (pdf: any) => void;
+
+interface OptionsProps extends PDFOptions {
   args?: string[];
 }
 
@@ -41,10 +32,18 @@ type FileType = FileWithUrl | FileWithContent;
 
 export async function generatePdf(file: FileType, opt?: OptionsProps, callback?: CallBackType) {
   const {args = [], ...options} = opt || {}
-  const browser = await chromium.launch({
-    args: ["--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
-    headless: true
-  })
+  let launchOptions = {}
+  if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    launchOptions = {
+      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    }
+  }
+
+  const browser = await puppeteer.launch(launchOptions)
 
 
   const page = await browser.newPage();
@@ -56,15 +55,20 @@ export async function generatePdf(file: FileType, opt?: OptionsProps, callback?:
 
     await page.setContent(html);
   } else {
-    await page.goto(file.url as string, {waitUntil: 'networkidle'});
+    await page.goto(file.url as string, {
+      waitUntil: 'networkidle0',
+    });
   }
 
   if(file.content) {}
 
-  return PromiseBluebird.props(page.pdf(options)).then(async function(data) {
+  return PromiseBluebird.props(page.pdf({
+    ...options,
+    format: options.format?.toLocaleLowerCase() as LowerCasePaperFormat
+  }))
+    .then(async function(data) {
        await browser.close();
 
        return Buffer.from(Object.values(data));
     }).asCallback(callback);
 }
-
