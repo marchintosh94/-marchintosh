@@ -5,12 +5,8 @@ import hb from 'handlebars';
 let chromium = {} as any;
 let puppeteer: any
 
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  chromium = require("chrome-aws-lambda");
-  puppeteer = require("puppeteer-core");
-} else {
-  puppeteer = require("puppeteer");
-}
+chromium = require("chrome-aws-lambda");
+puppeteer = require("puppeteer-core");
 
 type CallBackType = (pdf: any) => void;
 
