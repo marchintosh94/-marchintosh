@@ -1,18 +1,12 @@
-import { faArrowDownToLine, faArrowLeft, faDownload } from "@fortawesome/pro-light-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Airtable from "airtable";
 import Badge from "components/common/Badge";
-import Button from "components/common/Button";
 import ExtLinkButton from "components/common/ExtLinkButton";
 import Paragraph from "components/common/typography/Paragraph";
 import Title from "components/common/typography/Title";
 import Title3 from "components/common/typography/Title3";
-import ResumeItem from "components/ResumeItem";
 import { mapSkills } from "lib/utils";
 import { ContactsUI, ExperienceUI, NextPageWithLayout, ProfileUI, SkillUI } from "models/types";
 import Image from "next/image"
-import { useRouter } from "next/router";
-import { useState } from "react";
 
 export const getStaticProps = async () => {
   const airtable = new Airtable({apiKey: process.env.AIRTABLE_API_KEY}).base(process.env.AIRTABLE_WORKSPACE!)
@@ -169,7 +163,7 @@ const ResumeEn: NextPageWithLayout<{experiences: ExperienceUI[]; skills: SkillUI
               </li>
               <li className="flex py-4">
                 <div className="ml-3">
-                  <Paragraph className="sm:text-base font-medium ">English &#8594; B2</Paragraph>
+                  <Paragraph className="sm:text-base font-medium ">English &#8594; B1</Paragraph>
                 </div>
               </li>
             </ul>

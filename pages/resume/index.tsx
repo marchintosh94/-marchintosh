@@ -1,4 +1,4 @@
-import { faArrowDownToLine, faArrowLeft, faDownload } from "@fortawesome/pro-light-svg-icons";
+import { faArrowDownToLine, faArrowLeft } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Airtable from "airtable";
 import Badge from "components/common/Badge";
@@ -8,6 +8,7 @@ import Paragraph from "components/common/typography/Paragraph";
 import Title from "components/common/typography/Title";
 import Title3 from "components/common/typography/Title3";
 import ResumeItem from "components/ResumeItem";
+import { generatePdf } from "lib/html-to-pdf";
 import { mapSkills } from "lib/utils";
 import { ContactsUI, ExperienceUI, NextPageWithLayout, ProfileUI, SkillUI } from "models/types";
 import Image from "next/image"
@@ -22,6 +23,11 @@ export const getStaticProps = async () => {
     sort: [{field: 'groupOrder', direction: 'asc'}, {field: 'fieldOrder', direction: 'asc'}],
     filterByFormula: 'AND(NOT({type} = "database"), NOT({type} = "tools"), NOT({title} = "Yii"), NOT({title} = "Html"), NOT({title} = "Css"))'
   }).all()
+
+  const file = {url: `${process.env.FE_BASE_URL}/resume/en`}
+  const pdfBuffer = await generatePdf(file, {format: 'A4', printBackground: true, scale: 0.58})
+
+
   return {
     props: {
       contacts: contacts.map(c => ({id: c.id, ...c.fields})),
@@ -34,41 +40,32 @@ export const getStaticProps = async () => {
         endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present',
         skills: skills.filter(s => (e.fields.skills as string[]).includes(s.id)).map(mapSkills)
       })),
+      pdfBuffer: pdfBuffer.toJSON()
     },
     revalidate: 60 * 60 * 24 * 7, // In seconds
   }
 }
 
+interface ResumeProps {
+  experiences: ExperienceUI[]; 
+  skills: SkillUI[]; 
+  profile: ProfileUI; 
+  contacts: ContactsUI[]
+  pdfBuffer: {
+      type: "Buffer";
+      data: number[];
+  }
+}
 
-const Resume: NextPageWithLayout<{experiences: ExperienceUI[]; skills: SkillUI[]; profile: ProfileUI; contacts: ContactsUI[]}> = ({experiences, profile, skills, contacts}) => {
+const Resume: NextPageWithLayout<ResumeProps> = ({experiences, profile, skills, contacts, pdfBuffer}) => {
 
   const { back } = useRouter()
   const download = async () => {
-    // start the fetch and obtain a reader
-    const response = await fetch('/api/resume-en');
-    const reader = response.body!.getReader();
-    const contentLength = +response.headers.get('Content-Length')!;
-    
-    // Step 3: legge i dati
-    let receivedLength = 0; // ancora nessun byte è stato ricevuto
-    let chunks = []; // array dei chunks binari ricevuti (compreso il body)
-    while(true) {
-      const {done, value} = await reader.read();
-    
-      if (done) {
-        break;
-      }
-    
-      chunks.push(value);
-      receivedLength += value.length;
-    
-      console.log(`Ricevuti ${receivedLength} di ${contentLength}`)
-    }
-    
+   
     const link = document.createElement('a')
     //link.target = '_blank'
     link.download = 'marcobaratto-resume.pdf'
-    link.href = URL.createObjectURL(new Blob(chunks))
+    link.href = URL.createObjectURL(new Blob([Buffer.from(pdfBuffer.data)]))
     document.body.appendChild(link)
     link.click()
     link.parentNode?.removeChild(link);
@@ -174,7 +171,7 @@ const Resume: NextPageWithLayout<{experiences: ExperienceUI[]; skills: SkillUI[]
               </li>
               <li className="flex py-4">
                 <div className="ml-3">
-                  <Paragraph className="sm:text-base font-medium ">English &#8594; B2</Paragraph>
+                  <Paragraph className="sm:text-base font-medium ">English &#8594; B1</Paragraph>
                 </div>
               </li>
             </ul>
