@@ -32,15 +32,12 @@ type FileType = FileWithUrl | FileWithContent;
 
 export async function generatePdf(file: FileType, opt?: OptionsProps, callback?: CallBackType) {
   const {args = [], ...options} = opt || {}
-  let launchOptions = {}
-  if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-    launchOptions = {
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: true,
-      ignoreHTTPSErrors: true,
-    }
+  let launchOptions = {
+    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: true,
+    ignoreHTTPSErrors: true,
   }
 
   const browser = await puppeteer.launch(launchOptions)
