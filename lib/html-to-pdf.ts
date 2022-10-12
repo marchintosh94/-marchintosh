@@ -1,11 +1,29 @@
-import { LowerCasePaperFormat, PDFOptions } from 'puppeteer';
+import { chromium, Page} from "playwright"
 import { Promise as PromiseBluebird } from 'bluebird';
 import hb from 'handlebars';
-import chromium from 'chrome-aws-lambda';
 
 type CallBackType = (pdf: any) => void;
-
-interface OptionsProps extends PDFOptions {
+interface PdfPlaywrightOptions {
+  displayHeaderFooter?: boolean;
+  footerTemplate?: string;
+  format?: `Letter` | `Legal` | `Tabloid` | `Ledger` | `A0` | `A1` | `A2` | `A3` | `A4` | `A5` | `A6`;
+  headerTemplate?: 'date' | 'title' | 'url' | 'pageNumber' | 'totalPages';
+  height?: string|number;
+  landscape?: boolean;
+  margin?: {
+    top?: string|number;
+    right?: string|number;
+    bottom?: string|number;
+    left?: string|number;
+  };
+  pageRanges?: string;
+  path?: string;
+  preferCSSPageSize?: boolean;
+  printBackground?: boolean;
+  scale?: number;
+  width?: string|number;
+}
+interface OptionsProps extends PdfPlaywrightOptions{
   args?: string[];
 }
 
@@ -23,12 +41,9 @@ type FileType = FileWithUrl | FileWithContent;
 
 export async function generatePdf(file: FileType, opt?: OptionsProps, callback?: CallBackType) {
   const {args = [], ...options} = opt || {}
-  const browser = await chromium.puppeteer.launch({
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: true,
-    ignoreHTTPSErrors: true,
+  const browser = await chromium.launch({
+    args: ["--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
+    headless: true
   })
 
 
@@ -41,64 +56,15 @@ export async function generatePdf(file: FileType, opt?: OptionsProps, callback?:
 
     await page.setContent(html);
   } else {
-    await page.goto(file.url as string, {
-      waitUntil: 'networkidle0',
-    });
+    await page.goto(file.url as string, {waitUntil: 'networkidle'});
   }
 
   if(file.content) {}
 
-  return PromiseBluebird.props(page.pdf({
-    ...options,
-    format: options.format?.toLocaleLowerCase() as LowerCasePaperFormat
-  }))
-    .then(async function(data) {
+  return PromiseBluebird.props(page.pdf(options)).then(async function(data) {
        await browser.close();
 
        return Buffer.from(Object.values(data));
-    }).asCallback(callback);
-}
-
-export async function generatePdfs(files: FileType[], opt?: OptionsProps, callback?: CallBackType) {
-  const {args = [], ...options} = opt || {}
-
-  const browser = await chromium.puppeteer.launch({
-    args: [...chromium.args, "--hide-scrollbars", "--disable-web-security", '--no-sandbox', '--disable-setuid-sandbox', ...args],
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: true,
-    ignoreHTTPSErrors: true,
-  })
-
-  let pdfs = [];
-
-  const page = await browser.newPage();
-
-  for(let file of files) {
-    if(file.content) {
-      const template = hb.compile(file.content, { strict: true });
-      const result = template(file.content);
-      const html = result;
-
-      await page.setContent(html);
-    } else {
-      await page.goto(file.url as string, {
-        waitUntil: 'networkidle0',
-      });
-    }
-    let pdfObj = JSON.parse(JSON.stringify(file));
-    delete pdfObj['content'];
-    pdfObj['buffer'] = Buffer.from(Object.values(await page.pdf({
-      ...options,
-      format: options.format?.toLocaleLowerCase() as LowerCasePaperFormat
-    })));
-    pdfs.push(pdfObj);
-  }
-
-  return PromiseBluebird.resolve(pdfs)
-    .then(async function(data) {
-       await browser.close();
-       return data;
     }).asCallback(callback);
 }
 

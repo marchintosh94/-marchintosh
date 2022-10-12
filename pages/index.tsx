@@ -36,7 +36,7 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
 
   return (
     <>
-      <section className="flex flex-col space-y-6 md:flex-row  items-center">
+      <section className="flex flex-col space-y-6 md:flex-row  items-center sm:space-x-10">
         <div className="space-y-6 md:basis-3/5">
           <div>
             <small className="lowercase text-lg">
@@ -47,12 +47,11 @@ const Home: NextPageWithLayout<{experiences: ExperienceUI[]}> = ({experiences}) 
               Working with my hands to make magic happen on the internet.
             </Subtitle>
           </div>
-          <Paragraph className="mt-6 ">
+          <Paragraph className="mt-6 sm:w-[95%]">
             I'm softwaare developer from Florence, Italy with rock-solid experience in building complex applications with modern technologies.
             I'm focused on&nbsp;
-            <b>React TS</b>&nbsp;,&nbsp;
-            <b>Angular</b>&nbsp;and&nbsp;
-            <b>Vue</b>&nbsp;development and I'm a mobile development enthusiast.
+            <b>React TS</b>, &nbsp;
+            <b>Angular</b>&nbsp; and &nbsp;<b>Vue</b> &nbsp;development and I'm a mobile development enthusiast.
           </Paragraph>
           <LinkButton href={Pages.AboutMe.path}>See more About me</LinkButton>
         </div>
