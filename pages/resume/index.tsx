@@ -80,10 +80,10 @@ const Resume: NextPageWithLayout<ResumeProps> = ({experiences, profile, skills, 
         <div className="flex space-x-10 mx-auto max-w-[80rem]">
           <div className="sm:col-span-1 flex item justify-center">
             <figure className="dark:hidden">
-              <Image height={200} width={250} src={'/images/logo/mb_light.svg'}/>
+              <Image alt="marcobaratto logo" height={200} width={250} src={'/images/logo/mb_light.svg'}/>
             </figure>
             <figure className="hidden dark:block">
-              <Image height={200} width={250} src={'/images/logo/mb_dark.svg'}/>
+              <Image alt="marcobaratto logo" height={200} width={250} src={'/images/logo/mb_dark.svg'}/>
             </figure>
           </div>
           <div className="sm:col-span-2 flex items-center">
