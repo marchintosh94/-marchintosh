@@ -4,8 +4,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // next.config.js
 module.exports = withBundleAnalyzer({
   images: {
+    dangerouslyAllowSVG: true,
     domains: [
-      'dl.airtable.com'
+      'dl.airtable.com',
+      'v5.airtableusercontent.com'
     ]
   }
 })

@@ -42,10 +42,10 @@ const ResumeEn: NextPageWithLayout<{experiences: ExperienceUI[]; skills: SkillUI
       <header className="mx-auto max-w-[80rem] py-8 px-4 sm:py-10 sm:px-6 flex sm:gap-x-10">
         <div className="sm:col-span-1 flex justify-center">
           <figure className="dark:hidden">
-            <Image height={200} width={250} src={'/images/logo/mb_light.svg'}/>
+            <Image alt="marcobaratto logo" height={200} width={250} src={'/images/logo/mb_light.svg'}/>
           </figure>
           <figure className="hidden dark:block">
-            <Image height={200} width={250} src={'/images/logo/mb_dark.svg'}/>
+            <Image alt="marcobaratto logo" height={200} width={250} src={'/images/logo/mb_dark.svg'}/>
           </figure>
         </div>
         <div className="sm:col-span-2 flex space-x-12 items-start">

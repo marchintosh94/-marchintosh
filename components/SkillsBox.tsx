@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { Attacments, SkillUI } from "models/types";
+import { SkillUI } from "models/types";
 import Image from "next/image";
-import { title } from "process";
 import Badge from "./common/Badge";
 
 interface SkillsBoxProps extends React.HtmlHTMLAttributes<HTMLUListElement> {

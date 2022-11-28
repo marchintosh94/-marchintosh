@@ -48,7 +48,7 @@ const Projects: NextPageWithLayout<{projects: ProjectUI[]}> = ({projects}) => {
                 'sm:order-2 sm:justify-end': i % 2 == 0,
                 'sm:justify-start': i % 2 == 1
                 })}>
-                <Img onClick={() => navigateTo(project.website)} src={project.preview[0].url} className={clsx({
+                <Img alt={project.title} onClick={() => navigateTo(project.website)} src={project.preview[0].url} className={clsx({
                   "mb-project__img ": true,
                   'sm:order-2 mb-project__img-odd': i % 2 == 1,
                   'mb-project__img-even': i % 2 == 0

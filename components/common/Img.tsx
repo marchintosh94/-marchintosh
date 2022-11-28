@@ -7,8 +7,7 @@ const Img: React.FC<ImageProps> = ({className, ...props}) => {
   return (
     <div className={`overflow-hidden relative ${className}`}>
       <Image
-        layout="fill"
-        objectFit="cover"
+        fill={true}
         className={clsx(
           isLoading
                 ? 'grayscale blur-2xl scale-110'
