@@ -1,4 +1,4 @@
-import { FieldSet, Record } from "airtable";
+import { Attachment, FieldSet, Record } from "airtable";
 import { SkillUI } from "models/types";
 
 export const Pages = {
@@ -8,4 +8,4 @@ export const Pages = {
   Resume: {path: '/resume', title: 'Resume'}
 }
 
-export const mapSkills = ({id, fields: {Experiences, Projects, fieldOrder, groupOrder, ...skill}}: Record<FieldSet>): SkillUI => ({ id, ...skill } as SkillUI)
+export const mapSkills = ({id, fields: {Experiences, Projects, fieldOrder, groupOrder, ...skill}}: Record<FieldSet>): SkillUI => ({ id, ...skill, logo: (skill.logo as Attachment[]).map(elem => ({url: `/images/skills/${elem.filename}`})) } as SkillUI)

@@ -1,4 +1,4 @@
-import Airtable from "airtable";
+import Airtable, { Attachment } from "airtable";
 import Badge from "components/common/Badge";
 import ExtLinkButton from "components/common/ExtLinkButton";
 import Paragraph from "components/common/typography/Paragraph";
@@ -25,6 +25,7 @@ export const getStaticProps = async () => {
       experiences: experiences.map(e => ({
         id: e.id, 
         ...e.fields,
+        logo: (e.fields.logo as Attachment[]).map(elem => ({url: `/images/experiences/${elem.filename}`})),
         startYear: `${new Date(e.fields.start as string).getMonth()}/${new Date(e.fields.start as string).getFullYear()}`,
         endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present',
         skills: skills.filter(s => (e.fields.skills as string[]).includes(s.id)).map(mapSkills)

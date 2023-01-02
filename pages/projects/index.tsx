@@ -1,4 +1,4 @@
-import Airtable from "airtable";
+import Airtable, { Attachment } from "airtable";
 import clsx from "clsx";
 import Badge from "components/common/Badge";
 import Img from "components/common/Img";
@@ -23,6 +23,7 @@ export const getStaticProps = async () => {
       projects: projects.map(p => ({
         id: p.id, 
         ...p.fields,
+        preview: (p.fields.preview as Attachment[]).map(elem => ({url: `/images/preview/${elem.filename}`})),
         skills: skills.filter(s => (p.fields.skills as string[]).includes(s.id)).map(mapSkills)
       })),
     },
