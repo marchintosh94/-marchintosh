@@ -27,8 +27,7 @@ export const getStaticProps = async () => {
         endYear: e.fields.end? `${new Date(e.fields.end as string).getMonth()}/${new Date(e.fields.end as string).getFullYear()}` : 'Present',
         skills: skills.filter(s => (e.fields.skills as string[]).includes(s.id)).map(mapSkills)
       })),
-    },
-    revalidate: 60 * 60 * 24 * 7, // In seconds
+    }
   }
 }
 
