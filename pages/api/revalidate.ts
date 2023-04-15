@@ -10,10 +10,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const path = req.query.path as string
   // Check for secret to confirm this is a valid request
   if (req.query.secret !== process.env.MY_SECRET_TOKEN) {
-    return res.status(401).json({ message: 'Invalid token' })
+    return res.status(401).json({ message: 'Invalid token', secret:  req.query.secret })
   }
   if (!availablePaths.has(path)){
-    return res.status(400).send('Invalid path')
+    return res.status(400).json({ message: 'Invalid path', path })
   }
 
   try {
